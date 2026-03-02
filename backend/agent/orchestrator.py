@@ -169,30 +169,38 @@ class AgentOrchestrator:
 
         # Step 5 — terminal action based on risk decision
         if risk.get("decision") == "auto_approved":
-            hub_id      = hub["nearest_hub"]["hub_id"] if hub_available else None
-            locker_unit = hub["nearest_hub"].get("available_locker_unit") if hub_available else None
+            match_found = buyers.get("match_found", False)
 
-            if hub_available:
-                locker = await self._dispatch("allocate_locker", {
-                    "hub_id": hub_id,
-                    "return_id": return_id,
-                    "item_weight_g": weight,
-                    "return_window_hrs": 48
-                })
-                locker_unit = locker.get("locker_unit", locker_unit)
-
-            await self._dispatch("issue_instant_refund", {
-                "customer_id": customer_id,
-                "return_id": return_id,
-                "amount": value,
-                "reasoning": risk.get("reasoning", "Auto-approved by risk engine.")
-            })
-
+            # Community hub P2P only makes sense when there is BOTH a hub AND a buyer match.
+            # Without a buyer match, fall back to warehouse even if a hub exists nearby.
             routing_type = (
-                "community_hub_p2p" if hub_available else
-                "carrier_p2p"       if buyers.get("match_found") else
+                "community_hub_p2p" if (hub_available and match_found) else
+                "carrier_p2p"       if match_found else
                 "warehouse"
             )
+
+            hub_id      = None
+            locker_unit = None
+
+            if routing_type != "warehouse":
+                if hub_available and match_found:
+                    hub_id      = hub["nearest_hub"]["hub_id"]
+                    locker_unit = hub["nearest_hub"].get("available_locker_unit")
+                    locker = await self._dispatch("allocate_locker", {
+                        "hub_id": hub_id,
+                        "return_id": return_id,
+                        "item_weight_g": weight,
+                        "return_window_hrs": 48
+                    })
+                    locker_unit = locker.get("locker_unit", locker_unit)
+
+                await self._dispatch("issue_instant_refund", {
+                    "customer_id": customer_id,
+                    "return_id": return_id,
+                    "amount": value,
+                    "reasoning": risk.get("reasoning", "Auto-approved by risk engine.")
+                })
+
             await self._dispatch("generate_routing_instruction", {
                 "return_id": return_id,
                 "routing_type": routing_type,
@@ -201,7 +209,7 @@ class AgentOrchestrator:
                 "locker_unit": locker_unit,
                 "p2p_match_order_id": (
                     buyers.get("best_match", {}).get("order_id")
-                    if buyers.get("match_found") else None
+                    if match_found else None
                 )
             })
         else:
