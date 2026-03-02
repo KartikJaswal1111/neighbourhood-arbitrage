@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    @apply bg-slate-50 text-slate-800;
+  }
+}
+
+@layer components {
+  /* ── Cards ── */
+  .card {
+    @apply bg-white rounded-2xl border border-slate-100 shadow-card p-6;
+  }
+
+  /* ── Badges ── */
+  .badge {
+    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold tracking-wide;
+  }
+  .badge-green  { @apply badge bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200; }
+  .badge-red    { @apply badge bg-rose-50 text-rose-700 ring-1 ring-rose-200; }
+  .badge-yellow { @apply badge bg-amber-50 text-amber-700 ring-1 ring-amber-200; }
+  .badge-blue   { @apply badge bg-sky-50 text-sky-700 ring-1 ring-sky-200; }
+  .badge-purple { @apply badge bg-violet-50 text-violet-700 ring-1 ring-violet-200; }
+  .badge-orange { @apply badge bg-orange-50 text-orange-700 ring-1 ring-orange-200; }
+  .badge-indigo { @apply badge bg-indigo-50 text-indigo-700 ring-1 ring-indigo-200; }
+
+  /* ── Buttons ── */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl
+           bg-gradient-to-r from-indigo-500 to-violet-600
+           text-white font-semibold text-sm tracking-wide
+           shadow-brand hover:from-indigo-600 hover:to-violet-700 hover:shadow-lg
+           transition-all duration-200 active:scale-[0.97]
+           disabled:opacity-60 disabled:cursor-not-allowed;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl
+           bg-white border border-slate-200 text-slate-700 font-semibold text-sm
+           hover:bg-slate-50 hover:border-indigo-300 hover:text-indigo-700
+           transition-all duration-200 active:scale-[0.97];
+  }
+  .btn-success {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl
+           bg-gradient-to-r from-emerald-500 to-teal-600
+           text-white font-semibold text-sm
+           shadow-success hover:from-emerald-600 hover:to-teal-700
+           transition-all duration-200 active:scale-[0.97]
+           disabled:opacity-60 disabled:cursor-not-allowed;
+  }
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl
+           bg-gradient-to-r from-rose-500 to-pink-600
+           text-white font-semibold text-sm
+           shadow-danger hover:from-rose-600 hover:to-pink-700
+           transition-all duration-200 active:scale-[0.97]
+           disabled:opacity-60 disabled:cursor-not-allowed;
+  }
+
+  /* ── Inputs ── */
+  .input {
+    @apply w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-white
+           text-slate-800 placeholder-slate-400 text-sm
+           focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-400
+           transition-all duration-200;
+  }
+}
