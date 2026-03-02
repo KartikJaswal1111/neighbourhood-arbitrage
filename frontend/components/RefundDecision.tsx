@@ -75,11 +75,11 @@ export default function RefundDecision({
           <span>$15.00</span>
         </div>
         <div className={`border-t pt-2 flex justify-between font-bold ${
-          isApproved ? 'border-emerald-200' : 'border-rose-200'
+          isInstant ? 'border-emerald-200' : isWarehouse ? 'border-amber-200' : 'border-rose-200'
         }`}>
           <span className="text-slate-600 font-sans text-xs">Decision</span>
-          <span className={isApproved ? 'text-emerald-600' : 'text-rose-600'}>
-            {isApproved ? '✓ AUTO APPROVED' : '✗ ESCALATE'}
+          <span className={isInstant ? 'text-emerald-600' : isWarehouse ? 'text-amber-600' : 'text-rose-600'}>
+            {isInstant ? '✓ AUTO APPROVED' : isWarehouse ? '🏭 REFUND ON DELIVERY' : '✗ ESCALATE'}
           </span>
         </div>
       </div>
