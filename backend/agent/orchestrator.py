@@ -157,20 +157,21 @@ class AgentOrchestrator:
         )
 
         hub_available = hub.get("hub_found", False)
+        match_found   = buyers.get("match_found", False)
 
         # Step 4 — refund risk calculation (pure math, no LLM)
+        # Locker risk reduction only applies when BOTH a hub AND a buyer match exist.
+        # Without a buyer match the item goes to warehouse — no locker is used.
         risk = await self._dispatch("calculate_refund_risk", {
             "item_value": value,
             "fraud_probability": fraud.get("fraud_probability", 0.10),
             "condition_score": cond_score,
             "liquidation_rate": liq_rate,
-            "locker_available": hub_available
+            "locker_available": hub_available and match_found
         })
 
         # Step 5 — terminal action based on risk decision
         if risk.get("decision") == "auto_approved":
-            match_found = buyers.get("match_found", False)
-
             # Community hub P2P only makes sense when there is BOTH a hub AND a buyer match.
             # Without a buyer match, fall back to warehouse even if a hub exists nearby.
             routing_type = (
