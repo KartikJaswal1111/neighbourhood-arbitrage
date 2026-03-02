@@ -85,7 +85,11 @@ export default function RefundDecision({
       </div>
 
       {reasoning && (
-        <p className="text-slate-600 text-sm leading-relaxed">{reasoning}</p>
+        <p className="text-slate-600 text-sm leading-relaxed">
+          {isWarehouse
+            ? reasoning.replace(/Refund auto-approved\./i, 'Item routed to warehouse — refund issued after delivery confirmation.')
+            : reasoning}
+        </p>
       )}
 
       {transactionId && (
