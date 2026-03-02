@@ -1,7 +1,6 @@
 # Neighbourhood Arbitrage Engine — MVP
 
 AI-native reverse logistics: e-commerce returns rerouted P2P via Smart Lockers.
-Built for Wealthsimple AI Builder application.
 
 ## Setup & Run (5 minutes)
 
