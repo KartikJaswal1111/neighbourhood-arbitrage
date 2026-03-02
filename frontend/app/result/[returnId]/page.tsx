@@ -109,6 +109,7 @@ export default function ResultPage() {
               amount={data.refund.amount}
               transactionId={data.refund.transaction_id}
               fraudProb={data.fraud.probability}
+              routingDecision={data.routing.decision}
             />
             <LockerFlow
               returnId={returnId}

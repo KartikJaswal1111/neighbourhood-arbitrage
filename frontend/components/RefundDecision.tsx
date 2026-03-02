@@ -7,38 +7,46 @@ interface Props {
   amount: number | null
   transactionId: string | null
   fraudProb: number | null
+  routingDecision: string | null
 }
 
 export default function RefundDecision({
-  decision, reasoning, expectedLoss, amount, transactionId, fraudProb
+  decision, reasoning, expectedLoss, amount, transactionId, fraudProb, routingDecision
 }: Props) {
   if (!decision) return null
-  const isApproved  = decision === 'auto_approved'
-  const isEscalated = decision === 'escalate'
+  const isApproved   = decision === 'auto_approved'
+  const isEscalated  = decision === 'escalate'
+  const isWarehouse  = routingDecision === 'warehouse' || routingDecision === 'no_match_routed'
+  const isInstant    = isApproved && !isWarehouse
 
   return (
     <div className={`rounded-2xl border-2 p-6 space-y-5 ${
-      isApproved  ? 'border-emerald-200 bg-emerald-50' :
+      isInstant   ? 'border-emerald-200 bg-emerald-50' :
       isEscalated ? 'border-rose-200 bg-rose-50' :
+      isWarehouse ? 'border-amber-200 bg-amber-50' :
                     'border-amber-200 bg-amber-50'
     }`}>
       {/* Header */}
       <div className="flex items-center gap-4">
         <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shadow-sm ${
-          isApproved ? 'bg-emerald-100' : isEscalated ? 'bg-rose-100' : 'bg-amber-100'
+          isInstant ? 'bg-emerald-100' : isEscalated ? 'bg-rose-100' : 'bg-amber-100'
         }`}>
-          {isApproved ? '✅' : isEscalated ? '🚨' : '⏸️'}
+          {isInstant ? '✅' : isEscalated ? '🚨' : isWarehouse ? '🏭' : '⏸️'}
         </div>
         <div>
           <h3 className={`text-xl font-extrabold ${
-            isApproved ? 'text-emerald-700' : isEscalated ? 'text-rose-700' : 'text-amber-700'
+            isInstant ? 'text-emerald-700' : isEscalated ? 'text-rose-700' : 'text-amber-700'
           }`}>
-            {isApproved  ? 'INSTANT REFUND APPROVED' :
+            {isInstant   ? 'INSTANT REFUND APPROVED' :
              isEscalated ? 'ESCALATED TO HUMAN REVIEW' :
+             isWarehouse ? 'REFUND ON DELIVERY' :
                            'MANUAL PROCESSING'}
           </h3>
-          {amount && isApproved && (
+          {isInstant && amount && (
             <p className="text-emerald-600 font-semibold text-sm">${amount.toFixed(2)} CAD credited instantly</p>
+          )}
+          {isWarehouse && (
+            <p className="text-amber-600 font-semibold text-sm">Issued after warehouse confirms receipt</p>
           )}
         </div>
       </div>
