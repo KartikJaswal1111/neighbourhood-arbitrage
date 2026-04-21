@@ -1,6 +1,40 @@
 # Neighbourhood Arbitrage Engine — MVP
 
-AI-native reverse logistics: e-commerce returns rerouted P2P via Smart Lockers.
+> **Built a working prototype of an AI-native business system.**
+
+**Live Demo → [neighbourhood-arbitrage.vercel.app](https://neighbourhood-arbitrage.vercel.app)**
+
+
+
+Once a customer clicks "Return", that product disappears from the sellable market for 10–20 days — capital locked in a box on a porch. 70% of return costs are human labour. Margins erode by up to 30%. The carbon footprint of shipping an item back to a warehouse just to ship it out again to a neighbour is indefensible.
+
+**This system fixes that.**
+
+The Neighbourhood Arbitrage Engine intercepts a return the moment it is initiated and reroutes it — peer-to-peer — directly to a nearby buyer, via a Smart Locker Community Hub. A Claude claude-sonnet-4-6 agent runs a full inspection, fraud assessment, geographic match, and financial risk calculation in seconds. If the numbers clear, it issues an instant refund and allocates a locker. If anything looks wrong, it stops and hands to a human reviewer — with full reasoning attached.
+
+**The result:** ghost inventory eliminated, refund issued before the item moves, warehouse skipped entirely.
+
+---
+
+## What the AI Does — and Where It Stops
+
+This is not AI replacing human judgment. It is AI expanding the range of what one human can oversee.
+
+The agent handles:
+- Computer vision inspection of customer-submitted photos
+- Behavioural fraud signal analysis across return history
+- Real-time P2P buyer matching within a geographic radius
+- Financial risk calculation with locker-model risk reduction
+- Instant refund issuance and Smart Locker allocation
+- Transparent reasoning trace — every decision is explained
+
+The human handles:
+- Any case where expected financial loss exceeds $15
+- Fraud probability above 75%
+- Items valued above $500
+- Condition scores below 30/100
+
+These thresholds are set in `config.py` by a business owner — not negotiated by the AI.
 
 ---
 
