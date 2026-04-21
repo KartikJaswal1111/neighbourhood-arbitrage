@@ -5,8 +5,7 @@
 **Live Demo → [neighbourhood-arbitrage.vercel.app](https://neighbourhood-arbitrage.vercel.app)**
 
 
-
-Once a customer clicks "Return", that product disappears from the sellable market for 10–20 days — capital locked in a box on a porch. 70% of return costs are human labour. Margins erode by up to 30%. The carbon footprint of shipping an item back to a warehouse just to ship it out again to a neighbour is indefensible.
+Once a customer clicks "Return", that product disappears from the sellable market for 10–20 days — capital locked in a box on a porch. 70% of return costs are human labour.Margins erode by up to 30%. The carbon footprint of shipping an item back to a warehouse just to ship it out again to a neighbour is indefensible.
 
 **This system fixes that.**
 
